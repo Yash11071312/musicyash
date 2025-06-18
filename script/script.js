@@ -64,6 +64,51 @@ function playMusic(track, pause = false) {
         document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
     }
 }
+sync function displayAlbums() {
+    let res = await fetch(`http://127.0.0.1:3000/songs/`);
+    let text = await res.text();
+    let div = document.createElement("div");
+    div.innerHTML = text;
+    let anchors = Array.from(div.getElementsByTagName("a"));
+    let cardContainer = document.querySelector(".cardContainer");
+    // cardContainer.innerHTML = "";
+
+    for (let anchor of anchors) {
+        if (anchor.href.includes("/songs/") && !anchor.href.includes(".htaccess")) {
+            let folder = anchor.href.split("/").filter(Boolean).pop();
+            try {
+                let metaRes = await fetch(`https://api.github.com/repos/Yash11071312/musicyash/contents/songs/${folder}/info.json`);
+                let meta = await metaRes.json();
+                cardContainer.innerHTML += `
+                <div class="card" data-folder="${folder}">
+                    <div class="play">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 20V4L19 12L5 20Z" stroke="#141B34" fill="#000" stroke-width="1.5"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <img src="/songs/${folder}/cover.jpg" alt="">
+                    <h2>${meta.title}</h2>
+                    <p>${meta.description}</p>
+                </div>`;
+            } catch (err) {
+                console.warn(`info.json not found for ${folder}`);
+            }
+        }
+    }
+
+    // Handle album card click
+    document.querySelectorAll(".card").forEach(card => {
+        card.addEventListener("click", async () => {
+            let folder = card.dataset.folder;
+            songs = await getSongs(folder);
+            if (songs.length > 0) {
+                playMusic(songs[0]);
+            }
+        });
+    });
+}
 
 async function main() {
     await getSongs("fav");
