@@ -474,7 +474,26 @@ info.div {
 }
 
 @media (max-width: 400px) {
-    .card {
-        width: 90vw;
+    .cardcontainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;padding-right: 42px;
+
     }
+    .card {
+        width:100%;
+        justify-content: center;
+        margin: right 90px; ;
+    }
+.playbar {
+    position: fixed;
+    bottom: 34px;
+  /* margin-right: 17px; */
+  right: 12.5px
+  ;
+
+}
+.left{
+    width: 80vw;
+}
 }
