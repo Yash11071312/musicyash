@@ -65,7 +65,7 @@ function playMusic(track, pause = false) {
     }
 }
 async function displayAlbums() {
-    let res = await fetch(`http://127.0.0.1:3000/songs/`);
+    let res = await fetch(`https://api.github.com/repos/Yash11071312/musicyash/contents/songs/`);
     let text = await res.text();
     let div = document.createElement("div");
     div.innerHTML = text;
