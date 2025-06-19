@@ -139,6 +139,13 @@ async function main() {
         document.querySelector(".circle").style.left =
             (currentSong.currentTime / currentSong.duration) * 100 + "%";
     });
+currentSong.addEventListener("ended", () => {
+    let current = decodeURIComponent(currentSong.src.split("/").pop());
+    let index = songs.findIndex(song => song.name === current);
+    if (index !== -1 && index < songs.length - 1) {
+        playMusic(songs[index + 1].name);
+    }
+});
 
     document.querySelector(".seekbar").addEventListener("click", e => {
         let percent = (e.offsetX / e.target.getBoundingClientRect().width);
