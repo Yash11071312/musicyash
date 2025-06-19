@@ -66,21 +66,17 @@ function playMusic(track, pause = false) {
 }
 async function displayAlbums() {
     let res = await fetch(`https://api.github.com/repos/Yash11071312/musicyash/contents/songs/`);
-    let text = await res.text();
-    let div = document.createElement("div");
-    div.innerHTML = text;
-    let anchors = Array.from(div.getElementsByTagName("a"));
+    let folders = await res.json();
     let cardContainer = document.querySelector(".cardContainer");
-    // cardContainer.innerHTML = "";
+    cardContainer.innerHTML = "";
 
-    for (let anchor of anchors) {
-        if (anchor.href.includes("/songs/") && !anchor.href.includes(".htaccess")) {
-            let folder = anchor.href.split("/").filter(Boolean).pop();
+    for (let folder of folders) {
+        if (folder.type === "dir") {
             try {
-                let metaRes = await fetch(`https://api.github.com/repos/Yash11071312/musicyash/contents/songs/${folder}/info.json`);
+                let metaRes = await fetch(`https://raw.githubusercontent.com/Yash11071312/musicyash/main/songs/${folder.name}/info.json`);
                 let meta = await metaRes.json();
                 cardContainer.innerHTML += `
-                <div class="card" data-folder="${folder}">
+                <div class="card" data-folder="${folder.name}">
                     <div class="play">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -88,15 +84,28 @@ async function displayAlbums() {
                                 stroke-linejoin="round" />
                         </svg>
                     </div>
-                    <img src="/songs/${folder}/cover.jpg" alt="">
+                    <img src="https://raw.githubusercontent.com/Yash11071312/musicyash/main/songs/${folder.name}/cover.jpg" alt="">
                     <h2>${meta.title}</h2>
                     <p>${meta.description}</p>
                 </div>`;
             } catch (err) {
-                console.warn(`info.json not found for ${folder}`);
+                console.warn(`info.json not found for ${folder.name}`);
             }
         }
     }
+
+    // Album card click to load songs
+    document.querySelectorAll(".card").forEach(card => {
+        card.addEventListener("click", async () => {
+            let folder = card.dataset.folder;
+            songs = await getSongs(folder);
+            if (songs.length > 0) {
+                playMusic(songs[0].name);
+            }
+        });
+    });
+}
+
 
     // Handle album card click
     document.querySelectorAll(".card").forEach(card => {
