@@ -195,6 +195,10 @@ width: 100%;
   animation-duration: 1s;
   animation-delay: 17s;
 }
+.bhajan{
+     animation-name: example1;  animation-iteration-count: 1 infinite;
+  animation-duration: 1s;
+  animation-delay: 18s;}
 @keyframes example {
   0%   { left:0px; top:0px;}
   25%  {left:20px; top:0px;}
