@@ -64,7 +64,7 @@ function playMusic(track, pause = false) {
         document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
     }
 }
-sync function displayAlbums() {
+async function displayAlbums() {
     let res = await fetch(`http://127.0.0.1:3000/songs/`);
     let text = await res.text();
     let div = document.createElement("div");
