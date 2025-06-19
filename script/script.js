@@ -108,15 +108,17 @@ async function displayAlbums() {
 
 
     // Handle album card click
-    document.querySelectorAll(".card").forEach(card => {
-        card.addEventListener("click", async () => {
-            let folder = card.dataset.folder;
-            songs = await getSongs(folder);
-            if (songs.length > 0) {
-                playMusic(songs[0]);
-            }
-        });
+ // ✅ This one is correct — already in your code
+document.querySelectorAll(".card").forEach(card => {
+    card.addEventListener("click", async () => {
+        let folder = card.dataset.folder;
+        songs = await getSongs(folder);
+        if (songs.length > 0) {
+            playMusic(songs[0].name);  // Make sure to use .name here
+        }
     });
+});
+
 
 
 async function main() {
