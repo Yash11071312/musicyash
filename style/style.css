@@ -172,28 +172,28 @@ width: 100%;
 .fav{
  animation-name: example1  ;  animation-iteration-count: 1 ;
   animation-duration: 1s ;
-  animation-delay: 3s;
+  animation-delay: 13s;
 }
 .love{
  animation-name: example1;  animation-iteration-count: 1 infinite;
   animation-duration: 1s;
-  animation-delay: 4s;
+  animation-delay: 14s;
 }
 .fonk{
  animation-name: example1;  animation-iteration-count: 1 infinite;
   animation-duration: 1s;
-  animation-delay: 5s;
+  animation-delay: 15s;
 }
 
 .doremon{
      animation-name: example1;  animation-iteration-count: 1 infinite;
   animation-duration: 1s;
-  animation-delay: 6s;
+  animation-delay: 16s;
 }
 .ninja{
      animation-name: example1;  animation-iteration-count: 1 infinite;
   animation-duration: 1s;
-  animation-delay: 7s;
+  animation-delay: 17s;
 }
 @keyframes example {
   0%   { left:0px; top:0px;}
